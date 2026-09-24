@@ -1,6 +1,7 @@
 import streamlit as st
 import json
 from google import genai
+from agent import get_service_information
 
 st.set_page_config(
     page_title="NextStep AI",
@@ -16,10 +17,6 @@ api_key = st.secrets["GEMINI_API_KEY"]
 # Connect to Gemini
 client = genai.Client(api_key=api_key)
 
-# Load public service database
-with open("services.json", "r") as f:
-    services = json.load(f)
-
 user_request = st.text_area(
     "What public service do you need help with?",
     placeholder="Example: I need a birth certificate. What should I do?"
@@ -29,11 +26,24 @@ if st.button("Ask NextStep AI"):
 
     if user_request.strip():
 
-        service_information = json.dumps(services, indent=2)
+        # Agent identifies the relevant service
+        service_information = get_service_information(user_request)
 
-        response = client.models.generate_content(
-            model="gemini-3.5-flash-lite",
-            contents=f"""
+        if service_information is None:
+            st.warning(
+                "I couldn't identify the service. "
+                "Please mention the public service you need help with."
+            )
+
+        else:
+            service_information = json.dumps(
+                service_information,
+                indent=2
+            )
+
+            response = client.models.generate_content(
+                model="gemini-3.5-flash-lite",
+                contents=f"""
 You are NextStep AI, an AI assistant for public services.
 
 Your job is to help citizens understand what they should do
@@ -42,7 +52,7 @@ before applying for or visiting a public service.
 Use the service information provided below as your main
 source of information.
 
-SERVICE DATABASE:
+SERVICE INFORMATION:
 {service_information}
 
 CITIZEN REQUEST:
@@ -51,7 +61,7 @@ CITIZEN REQUEST:
 Follow this process:
 
 1. Understand the citizen's request.
-2. Identify the relevant service from the database.
+2. Use the identified service information.
 3. If important information is missing, ask a short clarification question.
 4. Give the relevant department.
 5. Give the available documents.
@@ -59,16 +69,15 @@ Follow this process:
 7. Mention important notes.
 8. Provide the official source.
 9. Never invent documents, fees, deadlines, rules, or procedures.
-10. If the requested service is not in the database, clearly say that
-the service is not currently covered and advise the citizen to verify
-the information with the relevant official department.
+10. If something is uncertain, tell the citizen to verify it with
+the relevant official department.
 
 Keep the answer simple and practical.
 """
-        )
+            )
 
-        st.subheader("🤖 NextStep AI")
-        st.write(response.text)
+            st.subheader("🤖 NextStep AI")
+            st.write(response.text)
 
     else:
         st.warning("Please enter a request first.")
