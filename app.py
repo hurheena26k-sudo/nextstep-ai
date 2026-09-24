@@ -1,7 +1,7 @@
 import streamlit as st
 import json
 from google import genai
-from agent import get_service_information
+from agent import get_service_information, detect_intent
 
 st.set_page_config(
     page_title="NextStep AI",
