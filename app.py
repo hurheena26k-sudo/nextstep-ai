@@ -63,6 +63,10 @@ if user_request:
 
     # Try to identify service from current request
     service_information = get_service_information(user_request)
+    intent = None
+
+if service_information is not None:
+    intent = detect_intent(user_request, service_information)
 
     # If current request is a follow-up, try previous messages
     if service_information is None:
