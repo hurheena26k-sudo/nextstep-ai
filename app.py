@@ -1,42 +1,48 @@
 import streamlit as st
-from agent import prepare_request
+from google import genai
 
 st.set_page_config(
     page_title="NextStep AI",
-    page_icon="🏙️",
-    layout="centered"
+    page_icon="🧭"
 )
 
-st.title("🏙️ NextStep AI")
-st.subheader("Your AI assistant for public services")
+st.title("🧭 NextStep AI")
+st.write("Your AI assistant for public services")
 
-st.write(
-    "Tell us what public service you need help with, "
-    "and NextStep AI will guide you."
-)
+api_key = st.secrets["GEMINI_API_KEY"]
+
+client = genai.Client(api_key=api_key)
 
 user_request = st.text_area(
-    "What do you need help with?",
-    placeholder="Example: I need a birth certificate."
+    "What public service do you need help with?",
+    placeholder="Example: I need a birth certificate. What should I do?"
 )
 
-if st.button("Find My Next Step", use_container_width=True):
+if st.button("Ask NextStep AI"):
 
     if user_request.strip():
 
-        result = prepare_request(user_request)
+        response = client.models.generate_content(
+            model="gemini-3.6-flash",
+            contents=f"""
+You are NextStep AI, an assistant that helps citizens
+understand public services.
 
-        st.success("Request received!")
+Citizen's request:
+{user_request}
 
-        st.markdown("### 📌 Your Request")
-        st.write(result["user_request"])
+Give a simple and clear answer.
 
-        st.markdown("### 🏛️ Available Public Services")
+Do not invent government rules, documents, fees,
+deadlines, or procedures.
 
-        for service in result["available_services"]:
-            st.write(f"**{service['name']}**")
-            st.write(f"Department: {service['department']}")
-            st.divider()
+If you are uncertain, tell the citizen to verify
+the information with the relevant official department.
+"""
+        )
+
+        st.subheader("🤖 NextStep AI")
+        st.write(response.text)
 
     else:
-        st.warning("Please enter your request first.")
+        st.warning("Please enter a request first.")
