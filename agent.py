@@ -1,4 +1,3 @@
-
 import json
 
 
@@ -7,10 +6,11 @@ def load_services():
         return json.load(file)
 
 
-def prepare_request(user_request):
+def get_service_information(user_request):
     services = load_services()
 
-    return {
-        "user_request": user_request,
-        "available_services": services["services"]
-    }
+    for service in services["services"]:
+        if service["name"].lower() in user_request.lower():
+            return service
+
+    return None
