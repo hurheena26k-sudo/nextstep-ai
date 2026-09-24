@@ -2,6 +2,12 @@
   "services": [
     {
       "name": "Birth Certificate",
+      "keywords": [
+        "birth",
+        "birth certificate",
+        "born",
+        "birth record"
+      ],
       "department": "Municipality",
       "documents": [
         "Proof of birth",
@@ -15,6 +21,13 @@
     },
     {
       "name": "Property Tax",
+      "keywords": [
+        "property tax",
+        "house tax",
+        "property",
+        "tax",
+        "pay tax"
+      ],
       "department": "Municipality",
       "documents": [
         "Property details",
@@ -28,6 +41,14 @@
     },
     {
       "name": "Municipal Complaint",
+      "keywords": [
+        "complaint",
+        "municipal complaint",
+        "grievance",
+        "problem",
+        "issue",
+        "complain"
+      ],
       "department": "Municipality",
       "documents": [],
       "steps": [
