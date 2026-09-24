@@ -72,9 +72,31 @@ Follow this process:
 10. Never invent documents, fees, deadlines, rules, or procedures.
 11. If something is uncertain, clearly tell the citizen to verify it
     with the relevant official department.
+    Format your response like this:
 
-Keep the answer simple and practical.
-"""
+### 🧭 Your NextStep Plan
+
+**Service:** [service name]
+
+**🏢 Department:**
+[department]
+
+**📄 Documents to Prepare:**
+- [document 1]
+- [document 2]
+
+**📝 Steps:**
+1. [step 1]
+2. [step 2]
+3. [step 3]
+
+**⚠️ Important Note:**
+Mention anything the citizen should verify or be careful about.
+
+**🔗 Source:**
+Provide the official source if one is available in the service information.
+
+Keep the response simple, practical, and easy for a first-time citizen to understand.
             )
 
             st.subheader("🤖 NextStep AI")
