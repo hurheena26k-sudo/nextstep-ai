@@ -57,6 +57,7 @@ SERVICE INFORMATION:
 
 CITIZEN REQUEST:
 {user_request}
+
 Follow this process:
 
 1. Understand the citizen's request.
@@ -68,11 +69,12 @@ Follow this process:
 6. Give the available documents.
 7. Give simple step-by-step instructions.
 8. Mention important notes.
-9. Provide the official source.
+9. Provide the official source if one is available.
 10. Never invent documents, fees, deadlines, rules, or procedures.
 11. If something is uncertain, clearly tell the citizen to verify it
     with the relevant official department.
-    Format your response like this:
+
+Format your response like this:
 
 ### 🧭 Your NextStep Plan
 
@@ -97,6 +99,7 @@ Mention anything the citizen should verify or be careful about.
 Provide the official source if one is available in the service information.
 
 Keep the response simple, practical, and easy for a first-time citizen to understand.
+"""
             )
 
             st.subheader("🤖 NextStep AI")
