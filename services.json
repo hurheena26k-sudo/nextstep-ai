@@ -17,7 +17,8 @@
         "Confirm the required documents",
         "Submit the application to the appropriate municipal service",
         "Keep the application/reference number"
-      ]
+      ],
+      "source": "https://www.telangana.gov.in/services/state-services/"
     },
     {
       "name": "Property Tax",
@@ -37,7 +38,8 @@
         "Check the property details",
         "Verify the applicable tax information",
         "Complete the required municipal process"
-      ]
+      ],
+      "source": "https://www.telangana.gov.in/services/state-services/"
     },
     {
       "name": "Municipal Complaint",
@@ -56,7 +58,8 @@
         "Provide the location of the issue",
         "Submit the complaint through the appropriate municipal channel",
         "Keep the complaint/reference number"
-      ]
+      ],
+      "source": "https://www.telangana.gov.in/services/state-services/"
     }
   ]
 }
