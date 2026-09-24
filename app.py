@@ -23,7 +23,7 @@ if st.button("Ask NextStep AI"):
     if user_request.strip():
 
         response = client.models.generate_content(
-            model="gemini-3.6-flash",
+            model="gemini-3.5-flash-lite",
             contents=f"""
 You are NextStep AI, an assistant that helps citizens
 understand public services.
