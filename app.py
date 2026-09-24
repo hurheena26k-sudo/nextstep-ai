@@ -9,8 +9,6 @@ st.set_page_config(
     layout="centered"
 )
 
-# ---------- HEADER ----------
-
 st.title("🧭 NextStep AI")
 st.subheader("Your AI guide for public services")
 
@@ -22,110 +20,127 @@ st.write(
 
 st.divider()
 
-# ---------- EXAMPLES ----------
-
-st.markdown("### 💡 Try asking")
-
-col1, col2, col3 = st.columns(3)
-
-with col1:
-    st.info("Birth Certificate")
-
-with col2:
-    st.info("Property Tax")
-
-with col3:
-    st.info("Municipal Complaint")
-
-st.divider()
-
 # ---------- API CONNECTION ----------
 
 api_key = st.secrets["GEMINI_API_KEY"]
 client = genai.Client(api_key=api_key)
 
-# ---------- USER REQUEST ----------
+# ---------- CONVERSATION MEMORY ----------
 
-user_request = st.text_area(
-    "🔎 What public service do you need help with?",
-    placeholder=(
-        "Example: I need a birth certificate. "
-        "What documents do I need?"
-    ),
-    height=120
-)
+if "messages" not in st.session_state:
+    st.session_state.messages = []
 
-ask_button = st.button(
-    "🧭 Create My NextStep Plan",
-    use_container_width=True
+# Show previous conversation
+for message in st.session_state.messages:
+
+    with st.chat_message(message["role"]):
+        st.markdown(message["content"])
+
+# ---------- USER INPUT ----------
+
+user_request = st.chat_input(
+    "What public service do you need help with?"
 )
 
 # ---------- AI PROCESS ----------
 
-if ask_button:
+if user_request:
 
-    if user_request.strip():
+    # Show user message
+    with st.chat_message("user"):
+        st.markdown(user_request)
 
-        service_information = get_service_information(user_request)
+    st.session_state.messages.append({
+        "role": "user",
+        "content": user_request
+    })
+
+    # Combine current request with previous conversation
+    conversation = "\n".join(
+        f'{message["role"].upper()}: {message["content"]}'
+        for message in st.session_state.messages
+    )
+
+    # Try to identify service from current request
+    service_information = get_service_information(user_request)
+
+    # If current request is a follow-up, try previous messages
+    if service_information is None:
+
+        previous_user_messages = [
+            message["content"]
+            for message in st.session_state.messages[:-1]
+            if message["role"] == "user"
+        ]
+
+        for previous_request in reversed(previous_user_messages):
+
+            service_information = get_service_information(
+                previous_request
+            )
+
+            if service_information is not None:
+                break
+
+    with st.chat_message("assistant"):
 
         if service_information is None:
 
-            st.warning(
+            response_text = (
                 "I don't currently have information about this service "
-                "in my service database."
-            )
-
-            st.info(
+                "in my service database.\n\n"
                 "Please check the relevant official government department "
                 "or portal for the current procedure and requirements."
             )
 
+            st.warning(response_text)
+
         else:
 
-            service_information = json.dumps(
+            service_information_json = json.dumps(
                 service_information,
                 indent=2
             )
 
-            with st.spinner("🧠 Preparing your NextStep Plan..."):
+            with st.spinner("🧠 Preparing your NextStep..."):
 
                 response = client.models.generate_content(
                     model="gemini-3.5-flash-lite",
                     contents=f"""
 You are NextStep AI, an AI assistant for public services.
 
-Your job is to help citizens understand what they should do
-before applying for or visiting a public service.
+You are having a conversation with a citizen.
 
-Use the service information provided below as your main
-source of information.
+Use the previous conversation to understand follow-up messages.
+For example, if the citizen first says "I need help with property tax"
+and later says "I want to pay it", understand that "it" refers to
+property tax.
 
 SERVICE INFORMATION:
-{service_information}
+{service_information_json}
 
-CITIZEN REQUEST:
-{user_request}
+CONVERSATION:
+{conversation}
 
-Follow this process:
+Follow these rules:
 
-1. Understand the citizen's request.
-2. Use the identified service information.
-3. Check whether the citizen has provided enough information to understand
-   what they actually want to do.
-4. If the request is ambiguous or missing important context, ask ONE short
-   clarification question before giving the action plan.
-5. Do not guess what the citizen means.
-6. After the citizen provides enough information, give the relevant
-   department, documents, steps, important notes, and source.
-7. Give simple step-by-step instructions.
-8. Mention important notes.
-9. Provide the official source if one is available.
-10. Never invent documents, fees, deadlines, rules, or procedures.
-11. If something is uncertain, clearly tell the citizen to verify it
-    with the relevant official department.
-12. If you need clarification, ask only one question at a time.
-13. Do not invent an answer just to avoid asking a question.
-Format your response like this:
+1. Understand the citizen's current request using the conversation.
+2. Use the identified service information as your main source.
+3. If the citizen's request is ambiguous, ask ONE short clarification
+   question.
+4. Do not guess missing information.
+5. Once enough information is available, provide a practical action plan.
+6. Give the relevant department.
+7. Give available documents.
+8. Give simple step-by-step instructions.
+9. Mention important notes.
+10. Provide the official source if available.
+11. Never invent government rules, documents, fees, deadlines,
+    or procedures.
+12. If something is uncertain, tell the citizen to verify it with
+    the relevant official department.
+
+Format the final action plan like this:
 
 ### 🧭 Your NextStep Plan
 
@@ -144,32 +159,19 @@ Format your response like this:
 3. [step 3]
 
 **⚠️ Important Note:**
-Mention anything the citizen should verify or be careful about.
+[important note]
 
 **🔗 Source:**
-Provide the official source if one is available in the service information.
+[source if available]
 
-Keep the response simple, practical, and easy for a first-time citizen to understand.
+Keep the response simple and practical.
 """
                 )
 
-            st.success("Your NextStep Plan is ready!")
+                response_text = response.text
+                st.markdown(response_text)
 
-            st.markdown(response.text)
-
-    else:
-
-        st.warning("Please enter a public-service request first.")
-
-# ---------- FOOTER ----------
-
-st.divider()
-
-st.caption(
-    "🧭 NextStep AI • Agentic AI for Smart Cities & Public Services"
-)
-
-st.caption(
-    "Information should be verified with the relevant official department "
-    "before taking action."
-)
+    st.session_state.messages.append({
+        "role": "assistant",
+        "content": response_text
+    })
