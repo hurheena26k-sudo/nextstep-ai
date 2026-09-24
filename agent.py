@@ -8,13 +8,20 @@ def load_services():
 
 def get_service_information(user_request):
     services = load_services()
-
     request = user_request.lower()
 
     for service in services["services"]:
         service_name = service["name"].lower()
 
+        # Exact service name
         if service_name in request:
             return service
+
+        # Common keywords
+        keywords = service.get("keywords", [])
+
+        for keyword in keywords:
+            if keyword.lower() in request:
+                return service
 
     return None
