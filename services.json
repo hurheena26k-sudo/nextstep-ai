@@ -29,6 +29,11 @@
         "tax",
         "pay tax"
       ],
+      "intents": [
+        "general information",
+        "payment",
+        "checking tax details"
+      ],
       "department": "Municipality",
       "documents": [
         "Property details",
