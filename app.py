@@ -28,12 +28,17 @@ if st.button("Ask NextStep AI"):
 
         # Agent identifies the relevant service
         service_information = get_service_information(user_request)
+if service_information is None:
+    st.warning(
+        "I don't currently have information about this service "
+        "in my service database."
+    )
 
-        if service_information is None:
-            st.warning(
-                "I couldn't identify the service. "
-                "Please mention the public service you need help with."
-            )
+    st.info(
+        "Please check the relevant official government department "
+        "or portal for the current procedure and requirements."
+    )
+        
 
         else:
             service_information = json.dumps(
