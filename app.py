@@ -23,14 +23,12 @@ st.set_page_config(
 
 
 # =========================================================
-# PROFESSIONAL UI
+# CSS
 # =========================================================
 
 st.markdown(
     """
     <style>
-
-    /* ---------- GLOBAL ---------- */
 
     .stApp {
         background: #f8fafc;
@@ -42,187 +40,159 @@ st.markdown(
         padding-bottom: 2rem;
     }
 
-    /* ---------- SIDEBAR ---------- */
+    /* SIDEBAR */
 
     section[data-testid="stSidebar"] {
         background: #ffffff;
         border-right: 1px solid #e5e7eb;
     }
 
-    section[data-testid="stSidebar"] .block-container {
-        padding-top: 1.2rem;
-    }
+    /* BRAND */
 
-    /* ---------- HEADER ---------- */
-
-    .brand {
+    .brand-row {
         display: flex;
         align-items: center;
-        gap: 12px;
+        gap: 10px;
         margin-bottom: 4px;
     }
 
     .brand-icon {
-        width: 44px;
-        height: 44px;
-        border-radius: 13px;
-        background: linear-gradient(
-            135deg,
-            #2563eb,
-            #4f46e5
-        );
+        width: 40px;
+        height: 40px;
+        border-radius: 11px;
+        background: #2563eb;
+        color: white;
         display: flex;
         align-items: center;
         justify-content: center;
-        color: white;
-        font-size: 23px;
-        box-shadow: 0 6px 18px rgba(37, 99, 235, 0.20);
+        font-size: 21px;
     }
 
-    .brand-title {
-        font-size: 27px;
+    .brand-name {
+        font-size: 24px;
         font-weight: 750;
         color: #172554;
-        line-height: 1.1;
     }
 
     .brand-subtitle {
         color: #64748b;
+        font-size: 12px;
+        margin-left: 50px;
+        margin-top: -5px;
+    }
+
+    /* MAIN HEADER */
+
+    .hero {
+        background: linear-gradient(
+            135deg,
+            #172554,
+            #2563eb
+        );
+        border-radius: 20px;
+        padding: 25px 28px;
+        color: white;
+        margin-bottom: 20px;
+        box-shadow: 0 10px 28px rgba(37, 99, 235, 0.13);
+    }
+
+    .hero-title {
+        font-size: 30px;
+        font-weight: 750;
+        margin-bottom: 5px;
+    }
+
+    .hero-text {
         font-size: 14px;
-        margin-top: 3px;
+        opacity: 0.9;
+        line-height: 1.5;
+        max-width: 750px;
+        margin: 0;
     }
 
-    /* ---------- WELCOME ---------- */
-
-    .welcome-box {
-        background: white;
-        border: 1px solid #e5e7eb;
-        border-radius: 18px;
-        padding: 26px;
-        margin: 20px 0;
-        box-shadow: 0 5px 20px rgba(15, 23, 42, 0.04);
-    }
-
-    .welcome-title {
-        color: #172554;
-        font-size: 24px;
-        font-weight: 700;
-        margin-bottom: 7px;
-    }
-
-    .welcome-text {
-        color: #64748b;
-        font-size: 15px;
-        margin-bottom: 18px;
-    }
-
-    /* ---------- SERVICE CARDS ---------- */
-
-    .service-grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 12px;
-        margin-top: 15px;
-    }
+    /* SERVICE CARDS */
 
     .service-card {
-        background: #f8fafc;
+        background: white;
         border: 1px solid #e5e7eb;
-        border-radius: 13px;
-        padding: 15px;
+        border-radius: 14px;
+        padding: 16px;
+        min-height: 105px;
+        box-shadow: 0 4px 15px rgba(15, 23, 42, 0.03);
     }
 
     .service-icon {
         font-size: 22px;
-        margin-bottom: 7px;
     }
 
     .service-name {
-        font-weight: 650;
-        color: #1e293b;
+        color: #172554;
+        font-weight: 700;
+        margin-top: 6px;
         font-size: 14px;
     }
 
     .service-description {
         color: #64748b;
         font-size: 12px;
-        margin-top: 4px;
+        margin-top: 3px;
     }
 
-    /* ---------- SIDEBAR SERVICE ---------- */
+    /* SIDEBAR SERVICE */
 
-    .side-service {
-        padding: 10px 11px;
+    .sidebar-service {
+        background: #f8fafc;
         border: 1px solid #e5e7eb;
         border-radius: 10px;
+        padding: 9px 11px;
         margin-bottom: 7px;
-        background: #fafafa;
     }
 
-    .side-service-title {
+    .sidebar-service-title {
+        color: #1e293b;
         font-size: 13px;
         font-weight: 650;
-        color: #1e293b;
     }
 
-    .side-service-text {
+    .sidebar-service-text {
         color: #64748b;
         font-size: 11px;
         margin-top: 2px;
     }
 
-    /* ---------- HISTORY ---------- */
+    /* SOURCE */
 
-    .history-title {
-        color: #475569;
-        font-size: 12px;
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
+    .source-box {
+        background: #f8fbff;
+        border: 1px solid #dbeafe;
+        border-radius: 10px;
+        padding: 9px 11px;
+        margin-top: 8px;
         margin-bottom: 7px;
     }
 
-    /* ---------- CHAT ---------- */
-
-    [data-testid="stChatMessage"] {
-        border-radius: 15px;
-    }
-
-    /* ---------- SERVICE BADGE ---------- */
-
-    .service-badge {
-        display: inline-block;
-        margin-top: 7px;
-        padding: 5px 9px;
-        border-radius: 7px;
-        background: #eff6ff;
-        color: #1d4ed8;
-        border: 1px solid #bfdbfe;
+    .source-title {
+        color: #475569;
         font-size: 11px;
-        font-weight: 600;
+        font-weight: 650;
     }
 
-    /* ---------- VOICE BAR ---------- */
+    .source-url {
+        color: #2563eb;
+        font-size: 11px;
+        word-break: break-all;
+        margin-top: 3px;
+    }
 
-    .voice-bar {
-        display: inline-flex;
-        align-items: center;
-        gap: 7px;
-        padding: 5px 9px;
-        border: 1px solid #dbeafe;
-        background: #eff6ff;
-        border-radius: 9px;
-        color: #1d4ed8;
+    /* VOICE */
+
+    .voice-label {
+        color: #64748b;
         font-size: 12px;
         margin-top: 8px;
     }
 
-    .wave {
-        font-size: 16px;
-        letter-spacing: -2px;
-    }
-
-    /* ---------- FOOTER ---------- */
+    /* FOOTER */
 
     .footer {
         text-align: center;
@@ -231,22 +201,8 @@ st.markdown(
         padding-top: 25px;
     }
 
-    /* ---------- MOBILE ---------- */
-
-    @media (max-width: 700px) {
-
-        .service-grid {
-            grid-template-columns: 1fr;
-        }
-
-        .brand-title {
-            font-size: 23px;
-        }
-
-        .welcome-box {
-            padding: 19px;
-        }
-
+    [data-testid="stChatMessage"] {
+        border-radius: 14px;
     }
 
     </style>
@@ -289,6 +245,13 @@ if "selected_voice" not in st.session_state:
 # HELPER FUNCTIONS
 # =========================================================
 
+def get_current_chat():
+
+    return st.session_state.conversations[
+        st.session_state.current_chat_id
+    ]
+
+
 def create_new_chat():
 
     chat_id = uuid.uuid4().hex
@@ -301,102 +264,403 @@ def create_new_chat():
     st.session_state.current_chat_id = chat_id
 
 
-def current_chat():
+def add_message(role, content, source=None):
 
-    return st.session_state.conversations[
-        st.session_state.current_chat_id
-    ]
+    message = {
+        "role": role,
+        "content": content
+    }
 
+    if source:
+        message["source"] = source
 
-def make_title(text):
-
-    text = text.strip()
-
-    if len(text) <= 38:
-        return text
-
-    return text[:38] + "..."
+    get_current_chat()["messages"].append(message)
 
 
-def clean_for_speech(text):
+def create_title(text):
 
-    speech = text
-
-    # Markdown headings
-    speech = re.sub(
-        r"#{1,6}\s*",
-        "",
-        speech
-    )
-
-    # Bold
-    speech = re.sub(
-        r"\*\*([^*]+)\*\*",
-        r"\1",
-        speech
-    )
-
-    # Italic
-    speech = re.sub(
-        r"\*([^*]+)\*",
-        r"\1",
-        speech
-    )
-
-    # Markdown links
-    speech = re.sub(
-        r"\[([^\]]+)\]\([^)]+\)",
-        r"\1",
-        speech
-    )
-
-    # URLs
-    speech = re.sub(
-        r"https?://\S+",
-        "",
-        speech
-    )
-
-    # Bullets
-    speech = re.sub(
-        r"^\s*[-*•]\s*",
-        "",
-        speech,
-        flags=re.MULTILINE
-    )
-
-    # Numbered lists
-    speech = re.sub(
-        r"^\s*\d+\.\s*",
-        "",
-        speech,
-        flags=re.MULTILINE
-    )
-
-    # Emojis and symbols
-    speech = re.sub(
-        r"[^\x00-\x7F]+",
-        " ",
-        speech
-    )
-
-    # Spaces
-    speech = re.sub(
+    text = re.sub(
         r"\s+",
         " ",
-        speech
-    ).strip()
+        text.strip()
+    )
 
-    return speech
+    if len(text) <= 40:
+        return text
+
+    return text[:40] + "..."
 
 
-def add_message(role, content):
+def clean_speech_text(text):
 
-    current_chat()["messages"].append(
-        {
-            "role": role,
-            "content": content
-        }
+    text = re.sub(
+        r"#{1,6}\s*",
+        "",
+        text
+    )
+
+    text = re.sub(
+        r"\*\*([^*]+)\*\*",
+        r"\1",
+        text
+    )
+
+    text = re.sub(
+        r"\*([^*]+)\*",
+        r"\1",
+        text
+    )
+
+    text = re.sub(
+        r"\[([^\]]+)\]\([^)]+\)",
+        r"\1",
+        text
+    )
+
+    text = re.sub(
+        r"https?://\S+",
+        "",
+        text
+    )
+
+    text = re.sub(
+        r"^\s*[-*•]\s*",
+        "",
+        text,
+        flags=re.MULTILINE
+    )
+
+    text = re.sub(
+        r"^\s*\d+\.\s*",
+        "",
+        text,
+        flags=re.MULTILINE
+    )
+
+    text = re.sub(
+        r"[^\x00-\x7F]+",
+        " ",
+        text
+    )
+
+    text = re.sub(
+        r"\s+",
+        " ",
+        text
+    )
+
+    return text.strip()
+
+
+# =========================================================
+# SERVICE DETECTION
+# =========================================================
+
+def is_clear_service_request(text):
+
+    text = text.lower().strip()
+
+    # Birth certificate
+    if any(
+        phrase in text
+        for phrase in [
+            "birth certificate",
+            "birth record",
+            "certificate of birth"
+        ]
+    ):
+        return True
+
+    # Property tax
+    if any(
+        phrase in text
+        for phrase in [
+            "property tax",
+            "house tax",
+            "property tax payment",
+            "pay property tax"
+        ]
+    ):
+        return True
+
+    # Municipal complaint
+    if any(
+        phrase in text
+        for phrase in [
+            "municipal complaint",
+            "municipal problem",
+            "municipal issue",
+            "municipal grievance",
+            "file a complaint",
+            "submit a complaint",
+            "report a municipal problem",
+            "report a municipal issue"
+        ]
+    ):
+        return True
+
+    return False
+
+
+def get_previous_service(chat):
+
+    for message in reversed(
+        chat["messages"]
+    ):
+
+        if message["role"] != "user":
+            continue
+
+        if not is_clear_service_request(
+            message["content"]
+        ):
+            continue
+
+        service = get_service_information(
+            message["content"]
+        )
+
+        if service:
+            return service
+
+    return None
+
+
+# =========================================================
+# VOICE ASSISTANT
+# =========================================================
+
+def show_voice_assistant(text):
+
+    speech_text = clean_speech_text(text)
+
+    if not speech_text:
+        return
+
+    selected_voice = (
+        st.session_state.selected_voice
+    )
+
+    speech_json = json.dumps(
+        speech_text
+    )
+
+    voice_json = json.dumps(
+        selected_voice
+    )
+
+    components.html(
+        f"""
+        <script>
+
+        const nextStepText =
+            {speech_json};
+
+        const nextStepVoice =
+            {voice_json};
+
+
+        function getVoice() {{
+
+            const voices =
+                window.speechSynthesis.getVoices();
+
+            const voiceGroups = {{
+
+                "Female Voice 1": [
+                    "Samantha",
+                    "Google US English Female",
+                    "Microsoft Zira",
+                    "Karen",
+                    "Victoria"
+                ],
+
+                "Female Voice 2": [
+                    "Jenny",
+                    "Aria",
+                    "Sonia",
+                    "Ava",
+                    "Linda"
+                ],
+
+                "Male Voice 1": [
+                    "Alex",
+                    "Google US English",
+                    "Microsoft David",
+                    "Daniel",
+                    "George"
+                ],
+
+                "Male Voice 2": [
+                    "Guy",
+                    "Ryan",
+                    "Arthur",
+                    "James",
+                    "Tom"
+                ]
+
+            }};
+
+
+            const preferred =
+                voiceGroups[nextStepVoice]
+                || voiceGroups["Female Voice 1"];
+
+
+            for (
+                const wanted of preferred
+            ) {{
+
+                const match =
+                    voices.find(
+                        voice =>
+                            voice.name
+                                .toLowerCase()
+                                .includes(
+                                    wanted.toLowerCase()
+                                )
+                    );
+
+                if (match) {{
+                    return match;
+                }}
+
+            }}
+
+
+            return voices.find(
+                voice =>
+                    voice.lang &&
+                    voice.lang
+                        .toLowerCase()
+                        .startsWith("en")
+            ) || voices[0];
+
+        }}
+
+
+        function speakNextStep() {{
+
+            if (
+                !window.speechSynthesis
+            ) {{
+                return;
+            }}
+
+
+            window.speechSynthesis.cancel();
+
+
+            const utterance =
+                new SpeechSynthesisUtterance(
+                    nextStepText
+                );
+
+
+            const voice =
+                getVoice();
+
+
+            if (voice) {{
+
+                utterance.voice =
+                    voice;
+
+                utterance.lang =
+                    voice.lang;
+
+            }} else {{
+
+                utterance.lang =
+                    "en-US";
+
+            }}
+
+
+            utterance.rate =
+                0.93;
+
+            utterance.pitch =
+                1;
+
+            utterance.volume =
+                1;
+
+
+            window.speechSynthesis.speak(
+                utterance
+            );
+
+        }}
+
+
+        function stopNextStep() {{
+
+            if (
+                window.speechSynthesis
+            ) {{
+
+                window.speechSynthesis.cancel();
+
+            }}
+
+        }}
+
+
+        </script>
+
+
+        <div style="
+            display:flex;
+            align-items:center;
+            gap:7px;
+            margin-top:7px;
+            margin-bottom:5px;
+            font-family:Arial,sans-serif;
+        ">
+
+            <span style="
+                color:#64748b;
+                font-size:12px;
+            ">
+                Voice Assistant
+            </span>
+
+            <button
+                onclick="speakNextStep()"
+                title="Read answer aloud"
+                style="
+                    border:1px solid #bfdbfe;
+                    background:#eff6ff;
+                    color:#1d4ed8;
+                    border-radius:8px;
+                    padding:5px 9px;
+                    font-size:12px;
+                    cursor:pointer;
+                "
+            >
+                〰️
+            </button>
+
+            <button
+                onclick="stopNextStep()"
+                title="Stop voice"
+                style="
+                    border:1px solid #e2e8f0;
+                    background:white;
+                    color:#64748b;
+                    border-radius:8px;
+                    padding:5px 9px;
+                    font-size:12px;
+                    cursor:pointer;
+                "
+            >
+                Stop
+            </button>
+
+        </div>
+        """,
+        height=43
     )
 
 
@@ -408,27 +672,28 @@ with st.sidebar:
 
     st.markdown(
         """
-        <div class="brand">
+        <div class="brand-row">
             <div class="brand-icon">🧭</div>
-            <div>
-                <div class="brand-title">NextStep AI</div>
-                <div class="brand-subtitle">
-                    Public-service guidance
-                </div>
+            <div class="brand-name">
+                NextStep AI
             </div>
+        </div>
+
+        <div class="brand-subtitle">
+            Smart public-service guidance
         </div>
         """,
         unsafe_allow_html=True
     )
 
-    st.divider()
+    st.markdown("")
 
     # -----------------------------------------------------
     # NEW CHAT
     # -----------------------------------------------------
 
     if st.button(
-        "＋  New conversation",
+        "＋  New Conversation",
         use_container_width=True,
         type="primary"
     ):
@@ -436,77 +701,114 @@ with st.sidebar:
         create_new_chat()
         st.rerun()
 
-    st.markdown(
-        '<div class="history-title">Recent conversations</div>',
-        unsafe_allow_html=True
-    )
+    st.divider()
 
     # -----------------------------------------------------
     # HISTORY
     # -----------------------------------------------------
 
-    history_items = list(
+    st.markdown(
+        "### 🕘 Conversations"
+    )
+
+    history = list(
         st.session_state.conversations.items()
     )
 
-    history_items.reverse()
+    history.reverse()
 
-    for chat_id, chat_data in history_items:
+    for chat_id, chat_data in history:
 
         title = chat_data["title"]
 
-        if chat_id == st.session_state.current_chat_id:
+        if chat_id == (
+            st.session_state.current_chat_id
+        ):
 
-            label = "●  " + title
+            title = "●  " + title
 
         else:
 
-            label = "   " + title
+            title = "   " + title
 
         if st.button(
-            label,
-            key=f"history_{chat_id}",
+            title,
+            key=f"chat_{chat_id}",
             use_container_width=True
         ):
 
-            st.session_state.current_chat_id = chat_id
+            st.session_state.current_chat_id = (
+                chat_id
+            )
+
             st.rerun()
 
     st.divider()
 
     # -----------------------------------------------------
-    # SUPPORTED SERVICES
+    # VOICE
     # -----------------------------------------------------
 
     st.markdown(
-        "### Services"
+        "### 🔊 Voice"
+    )
+
+    voice_options = [
+        "Female Voice 1",
+        "Female Voice 2",
+        "Male Voice 1",
+        "Male Voice 2"
+    ]
+
+    st.session_state.selected_voice = (
+        st.selectbox(
+            "Assistant voice",
+            voice_options,
+            index=voice_options.index(
+                st.session_state.selected_voice
+            )
+        )
+    )
+
+    st.caption(
+        "🎙️ Microphone is available in the search box."
+    )
+
+    st.divider()
+
+    # -----------------------------------------------------
+    # SERVICES
+    # -----------------------------------------------------
+
+    st.markdown(
+        "### 📋 Supported Services"
     )
 
     st.markdown(
         """
-        <div class="side-service">
-            <div class="side-service-title">
+        <div class="sidebar-service">
+            <div class="sidebar-service-title">
                 📄 Birth Certificate
             </div>
-            <div class="side-service-text">
+            <div class="sidebar-service-text">
                 Application guidance
             </div>
         </div>
 
-        <div class="side-service">
-            <div class="side-service-title">
+        <div class="sidebar-service">
+            <div class="sidebar-service-title">
                 🏠 Property Tax
             </div>
-            <div class="side-service-text">
+            <div class="sidebar-service-text">
                 Payment and tax guidance
             </div>
         </div>
 
-        <div class="side-service">
-            <div class="side-service-title">
+        <div class="sidebar-service">
+            <div class="sidebar-service-title">
                 🏛️ Municipal Complaint
             </div>
-            <div class="side-service-text">
+            <div class="sidebar-service-text">
                 Complaint guidance
             </div>
         </div>
@@ -517,77 +819,55 @@ with st.sidebar:
     st.divider()
 
     # -----------------------------------------------------
-    # VOICE
-    # -----------------------------------------------------
-
-    st.markdown(
-        "### 🔊 Assistant voice"
-    )
-
-    voice_options = [
-        "Female Voice 1",
-        "Female Voice 2",
-        "Male Voice 1",
-        "Male Voice 2"
-    ]
-
-    selected_voice = st.selectbox(
-        "Voice",
-        voice_options,
-        index=voice_options.index(
-            st.session_state.selected_voice
-        ),
-        label_visibility="collapsed"
-    )
-
-    st.session_state.selected_voice = selected_voice
-
-    st.caption(
-        "Available voices depend on your browser."
-    )
-
-    st.divider()
-
-    # -----------------------------------------------------
-    # CURRENT CHAT ACTIONS
+    # CHAT ACTIONS
     # -----------------------------------------------------
 
     if st.button(
-        "🗑️ Clear conversation",
+        "🗑️ Clear Current Conversation",
         use_container_width=True
     ):
 
-        chat = current_chat()
+        chat = get_current_chat()
 
         chat["messages"] = []
         chat["title"] = "New conversation"
 
         st.rerun()
 
-    if len(st.session_state.conversations) > 1:
+
+    if len(
+        st.session_state.conversations
+    ) > 1:
 
         if st.button(
-            "Delete conversation",
+            "Delete Current Conversation",
             use_container_width=True
         ):
 
-            old_id = st.session_state.current_chat_id
+            current_id = (
+                st.session_state.current_chat_id
+            )
 
             del st.session_state.conversations[
-                old_id
+                current_id
             ]
 
             st.session_state.current_chat_id = (
-                next(iter(st.session_state.conversations))
+                next(
+                    iter(
+                        st.session_state.conversations
+                    )
+                )
             )
 
             st.rerun()
 
+
     st.divider()
 
     st.caption(
-        "Verify important information with the relevant "
-        "official department."
+        "Always verify important information with "
+        "the relevant official department."
     )
 
 
@@ -595,20 +875,22 @@ with st.sidebar:
 # MAIN HEADER
 # =========================================================
 
+chat = get_current_chat()
+
 st.markdown(
     """
-    <div class="brand">
-        <div class="brand-icon">🧭</div>
+    <div class="hero">
 
-        <div>
-            <div class="brand-title">
-                NextStep AI
-            </div>
-
-            <div class="brand-subtitle">
-                Your intelligent guide for public services
-            </div>
+        <div class="hero-title">
+            Your next step starts here.
         </div>
+
+        <p class="hero-text">
+            Ask about a public service or simply talk to
+            NextStep AI. Type your question or use the
+            microphone in the search box.
+        </p>
+
     </div>
     """,
     unsafe_allow_html=True
@@ -616,67 +898,73 @@ st.markdown(
 
 
 # =========================================================
-# CURRENT CHAT
-# =========================================================
-
-chat = current_chat()
-
-
-# =========================================================
-# WELCOME
+# WELCOME SCREEN
 # =========================================================
 
 if not chat["messages"]:
 
     st.markdown(
+        "### What can I help you with?"
+    )
+
+    columns = st.columns(3)
+
+    service_cards = [
+        (
+            "📄",
+            "Birth Certificate",
+            "Application guidance"
+        ),
+        (
+            "🏠",
+            "Property Tax",
+            "Payment and tax guidance"
+        ),
+        (
+            "🏛️",
+            "Municipal Complaint",
+            "Complaint guidance"
+        )
+    ]
+
+    for column, service in zip(
+        columns,
+        service_cards
+    ):
+
+        with column:
+
+            st.markdown(
+                f"""
+                <div class="service-card">
+
+                    <div class="service-icon">
+                        {service[0]}
+                    </div>
+
+                    <div class="service-name">
+                        {service[1]}
+                    </div>
+
+                    <div class="service-description">
+                        {service[2]}
+                    </div>
+
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
+
+    st.markdown(
         """
-        <div class="welcome-box">
-
-            <div class="welcome-title">
-                How can I help you today?
-            </div>
-
-            <div class="welcome-text">
-                Ask naturally about a public service, or ask me
-                a normal question. You can type or use the
-                microphone in the search box.
-            </div>
-
-            <div class="service-grid">
-
-                <div class="service-card">
-                    <div class="service-icon">📄</div>
-                    <div class="service-name">
-                        Birth Certificate
-                    </div>
-                    <div class="service-description">
-                        Documents and application guidance
-                    </div>
-                </div>
-
-                <div class="service-card">
-                    <div class="service-icon">🏠</div>
-                    <div class="service-name">
-                        Property Tax
-                    </div>
-                    <div class="service-description">
-                        Payment and tax information
-                    </div>
-                </div>
-
-                <div class="service-card">
-                    <div class="service-icon">🏛️</div>
-                    <div class="service-name">
-                        Municipal Complaint
-                    </div>
-                    <div class="service-description">
-                        Report a municipal issue
-                    </div>
-                </div>
-
-            </div>
-
-        </div>
+        <p style="
+            color:#64748b;
+            font-size:13px;
+            margin-top:16px;
+        ">
+        You can also ask normal questions such as
+        “What is AI?” or “Explain APIs simply.”
+        </p>
         """,
         unsafe_allow_html=True
     )
@@ -694,24 +982,58 @@ client = genai.Client(
 
 
 # =========================================================
-# DISPLAY CHAT
+# DISPLAY CURRENT CONVERSATION
 # =========================================================
 
 for message in chat["messages"]:
 
-    with st.chat_message(message["role"]):
+    with st.chat_message(
+        message["role"]
+    ):
 
         st.markdown(
             message["content"]
         )
 
+        if message.get("source"):
+
+            source = message["source"]
+
+            st.markdown(
+                f"""
+                <div class="source-box">
+
+                    <div class="source-title">
+                        🔗 Source
+                    </div>
+
+                    <div class="source-url">
+                        {source}
+                    </div>
+
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
+
+            try:
+
+                st.link_button(
+                    "Open official source",
+                    source
+                )
+
+            except Exception:
+
+                pass
+
 
 # =========================================================
-# CHAT INPUT WITH MICROPHONE
+# CHAT INPUT + MICROPHONE
 # =========================================================
 
 prompt = st.chat_input(
-    "Ask NextStep AI...",
+    "💬 Ask anything, or tap 🎙️ to speak...",
     accept_audio=True,
     audio_sample_rate=16000
 )
@@ -721,23 +1043,21 @@ user_request = None
 
 
 # =========================================================
-# INPUT HANDLING
+# TEXT INPUT
 # =========================================================
 
 if prompt:
 
-    # -----------------------------------------------------
-    # TEXT
-    # -----------------------------------------------------
-
     if prompt.text:
 
-        user_request = prompt.text.strip()
+        user_request = (
+            prompt.text.strip()
+        )
 
 
-    # -----------------------------------------------------
-    # AUDIO
-    # -----------------------------------------------------
+    # =====================================================
+    # VOICE INPUT
+    # =====================================================
 
     elif prompt.audio:
 
@@ -752,7 +1072,11 @@ if prompt:
                 )
 
                 audio_type = (
-                    prompt.audio.type
+                    getattr(
+                        prompt.audio,
+                        "type",
+                        None
+                    )
                     or "audio/wav"
                 )
 
@@ -765,15 +1089,15 @@ if prompt:
                                 mime_type=audio_type
                             ),
                             """
-Transcribe the user's speech.
+Transcribe exactly what the user says.
 
-Return ONLY the words spoken by the user.
+Return ONLY the spoken words.
 
-Do not answer the request.
+Do not answer the question.
 
 Do not summarize.
 
-Do not add information.
+Do not add any information.
 """
                         ]
                     )
@@ -787,10 +1111,8 @@ Do not add information.
 
                 st.error(
                     "I couldn't understand the voice input. "
-                    "Please try again."
+                    "Please try again or type your request."
                 )
-
-                user_request = None
 
 
 # =========================================================
@@ -799,19 +1121,24 @@ Do not add information.
 
 if user_request:
 
+    chat = get_current_chat()
+
+
     # -----------------------------------------------------
-    # TITLE
+    # CREATE CHAT TITLE
     # -----------------------------------------------------
 
-    if chat["title"] == "New conversation":
+    if chat["title"] == (
+        "New conversation"
+    ):
 
-        chat["title"] = make_title(
+        chat["title"] = create_title(
             user_request
         )
 
 
     # -----------------------------------------------------
-    # USER MESSAGE
+    # SHOW USER
     # -----------------------------------------------------
 
     with st.chat_message("user"):
@@ -820,6 +1147,7 @@ if user_request:
             user_request
         )
 
+
     add_message(
         "user",
         user_request
@@ -827,7 +1155,7 @@ if user_request:
 
 
     # -----------------------------------------------------
-    # CONVERSATION
+    # CONVERSATION CONTEXT
     # -----------------------------------------------------
 
     conversation = "\n".join(
@@ -837,85 +1165,76 @@ if user_request:
     )
 
 
-    # -----------------------------------------------------
-    # DIRECT SERVICE DETECTION
-    # -----------------------------------------------------
+    # =====================================================
+    # SERVICE DETECTION
+    # =====================================================
 
-    service_information = (
-        get_service_information(
-            user_request
-        )
-    )
-
+    service_information = None
     intent = None
 
-    if service_information:
 
-        intent = detect_intent(
-            user_request,
-            service_information
+    if is_clear_service_request(
+        user_request
+    ):
+
+        service_information = (
+            get_service_information(
+                user_request
+            )
         )
+
+        if service_information:
+
+            intent = detect_intent(
+                user_request,
+                service_information
+            )
 
 
     # -----------------------------------------------------
-    # FOLLOW-UP DETECTION
+    # FOLLOW-UP
     # -----------------------------------------------------
 
     if service_information is None:
 
-        follow_up_words = [
-            "what about",
+        previous_service = (
+            get_previous_service(chat)
+        )
+
+        follow_up_phrases = [
             "what documents",
             "which documents",
-            "how much",
+            "what do i need",
             "how can i",
             "where can i",
-            "what do i need",
-            "what should i",
-            "how long",
-            "can i",
-            "and then",
-            "then what",
+            "how much",
             "what next",
             "next step",
+            "how long",
+            "can i",
+            "then what",
+            "what about it",
             "tell me more"
         ]
 
         looks_like_follow_up = any(
             phrase in user_request.lower()
-            for phrase in follow_up_words
+            for phrase in follow_up_phrases
         )
 
-        if looks_like_follow_up:
+        if (
+            previous_service
+            and looks_like_follow_up
+        ):
 
-            previous_user_messages = [
-                message["content"]
-                for message in chat["messages"][:-1]
-                if message["role"] == "user"
-            ]
+            service_information = (
+                previous_service
+            )
 
-            for previous_request in reversed(
-                previous_user_messages
-            ):
-
-                previous_service = (
-                    get_service_information(
-                        previous_request
-                    )
-                )
-
-                if previous_service:
-
-                    service_information = (
-                        previous_service
-                    )
-
-                    intent = detect_intent(
-                        user_request,
-                        service_information
-                    )
-
-                    break
+            intent = detect_intent(
+                user_request,
+                service_information
+            )
 
 
     # =====================================================
@@ -925,16 +1244,24 @@ if user_request:
     with st.chat_message("assistant"):
 
         response_text = ""
+        source = None
 
-        # -------------------------------------------------
+
+        # =================================================
         # SUPPORTED SERVICE
-        # -------------------------------------------------
+        # =================================================
 
         if service_information:
 
             service_json = json.dumps(
                 service_information,
                 indent=2
+            )
+
+            source = (
+                service_information.get(
+                    "source"
+                )
             )
 
             with st.spinner(
@@ -949,11 +1276,9 @@ if user_request:
                             contents=f"""
 You are NextStep AI.
 
-You are an intelligent public-service guidance assistant.
+You help citizens understand public services.
 
-The user may ask about a supported public service.
-
-SERVICE DATA:
+SERVICE INFORMATION:
 {service_json}
 
 DETECTED INTENT:
@@ -962,71 +1287,54 @@ DETECTED INTENT:
 CONVERSATION:
 {conversation}
 
-IMPORTANT RULES:
+CURRENT USER REQUEST:
+{user_request}
 
-1. Understand the user's current request.
-2. Use the service data as the primary source.
-3. Keep previous conversation context.
-4. If the user asks a follow-up question, answer it using
-   the same service when appropriate.
-5. If important information is missing, ask one concise
-   clarification question.
-6. Do not invent government rules.
-7. Do not invent fees.
-8. Do not invent deadlines.
-9. Do not invent documents.
-10. Do not invent procedures.
-11. Clearly mention uncertainty when the service data does
-    not contain something.
-12. Keep the response practical and easy to understand.
-13. Mention the source supplied in the service data.
-14. Do not claim that the source verifies information unless
-    the source actually contains that information.
+Rules:
 
-For a service request, use:
+1. Answer the current question directly.
+2. Use the service information as the main source.
+3. Use previous conversation only for context.
+4. If the user asks a follow-up question, answer it directly.
+5. If important information is missing, ask one short clarification question.
+6. Never invent government rules.
+7. Never invent fees.
+8. Never invent deadlines.
+9. Never invent documents.
+10. Never invent eligibility requirements.
+11. Never invent procedures.
+12. If information is unavailable, say so clearly.
+13. Do not write the source URL because the application displays it separately.
+14. Keep the response simple and practical.
 
-### Your NextStep Plan
+If the user asks for the full procedure, use:
 
-**Service:** [service]
+### 🧭 Your NextStep Plan
 
-**Department:** [department]
+**Service:** [service name]
 
-**Documents to Prepare:**
-- ...
+**🏢 Department:**
+[department]
 
-**Steps:**
-1. ...
-2. ...
-3. ...
+**📄 Documents:**
+- [documents]
 
-**Important Note:**
-...
+**📝 Steps:**
+1. [step]
+2. [step]
+3. [step]
 
-**Source:**
-[source]
+**⚠️ Important Note:**
+[important note]
 
-Keep it concise.
+Do not create information that is not present in the service data.
 """
                         )
                     )
 
                     response_text = (
-                        response.text
+                        response.text.strip()
                     )
-
-                    st.markdown(
-                        response_text
-                    )
-
-                    st.markdown(
-                        f"""
-                        <div class="service-badge">
-                            Service: {service_information["name"]}
-                        </div>
-                        """,
-                        unsafe_allow_html=True
-                    )
-
 
                 except Exception:
 
@@ -1035,14 +1343,15 @@ Keep it concise.
                         "guidance right now. Please try again."
                     )
 
-                    st.error(
-                        response_text
-                    )
+
+            st.markdown(
+                response_text
+            )
 
 
-        # -------------------------------------------------
-        # NORMAL / UNKNOWN QUESTION
-        # -------------------------------------------------
+        # =================================================
+        # NORMAL / UNSUPPORTED SERVICE
+        # =================================================
 
         else:
 
@@ -1058,10 +1367,11 @@ Keep it concise.
                             contents=f"""
 You are NextStep AI.
 
-You are a friendly AI assistant focused on helping people
-navigate public services.
+You are a friendly general AI assistant with a special
+focus on public-service guidance.
 
-SUPPORTED PUBLIC SERVICES:
+NextStep AI currently has verified service information
+for ONLY these services:
 
 1. Birth Certificate
 2. Property Tax
@@ -1070,303 +1380,109 @@ SUPPORTED PUBLIC SERVICES:
 CONVERSATION:
 {conversation}
 
-USER'S CURRENT MESSAGE:
+CURRENT USER MESSAGE:
 {user_request}
 
-Follow these rules:
+Follow these rules carefully.
 
-1. If the user asks a normal conversational or general
-   knowledge question, answer normally and naturally.
-2. Do not force every question into a public-service response.
-3. If the user asks about a service that is NOT currently
-   supported, clearly explain that you do not currently have
+NORMAL QUESTIONS:
+
+If the user asks a normal question, such as:
+- What is AI?
+- What is an API?
+- Explain Python.
+- Hello.
+- Who are you?
+
+Answer normally and naturally.
+
+Do NOT force normal questions into a government-service
+response.
+
+SUPPORTED SERVICES:
+
+If the user asks about one of the three supported services,
+the application will handle it using its service database.
+
+UNSUPPORTED PUBLIC SERVICES:
+
+If the user asks about a public service that is not one
+of the three supported services:
+
+1. Clearly say that NextStep AI does not currently have
    verified procedure information for that service.
-4. When a service is unsupported, suggest the supported services
-   that NextStep AI can currently help with.
-5. Never invent a government procedure for an unsupported service.
-6. Do not pretend that an unsupported service is supported.
-7. If the user is simply greeting you, respond naturally.
-8. If the user asks what you can do, explain your capabilities.
-9. Keep answers concise and useful.
+2. Do NOT invent a procedure.
+3. Suggest the three services that are currently supported:
+   - Birth Certificate
+   - Property Tax
+   - Municipal Complaint
+4. Tell the user they can check the relevant official
+   government department or portal for the unsupported service.
+
+Keep the response friendly and concise.
 """
                         )
                     )
 
                     response_text = (
-                        response.text
+                        response.text.strip()
                     )
-
-                    st.markdown(
-                        response_text
-                    )
-
 
                 except Exception:
 
                     response_text = (
-                        "I'm having trouble connecting to the "
-                        "AI right now. Please try again."
-                    )
-
-                    st.error(
-                        response_text
+                        "I'm having trouble connecting to "
+                        "the AI right now. Please try again."
                     )
 
 
-        # =================================================
-        # VOICE ASSISTANT
-        # =================================================
+            st.markdown(
+                response_text
+            )
 
-        speech_text = clean_for_speech(
-            response_text
-        )
 
-        speech_data = json.dumps(
-            speech_text
-        )
-
-        selected_voice_data = json.dumps(
-            st.session_state.selected_voice
-        )
-
-        components.html(
-            f"""
-            <script>
-
-            const speechText =
-                {speech_data};
-
-            const selectedVoice =
-                {selected_voice_data};
-
-
-            function getVoiceList() {{
-
-                return window.speechSynthesis
-                    .getVoices();
-
-            }}
-
-
-            function findVoice(
-                voices,
-                selected
-            ) {{
-
-                const female1 = [
-                    "Samantha",
-                    "Google US English Female",
-                    "Microsoft Zira",
-                    "Karen",
-                    "Victoria"
-                ];
-
-                const female2 = [
-                    "Ava",
-                    "Jenny",
-                    "Aria",
-                    "Sonia",
-                    "Linda"
-                ];
-
-                const male1 = [
-                    "Alex",
-                    "Google US English",
-                    "Microsoft David",
-                    "Daniel",
-                    "George"
-                ];
-
-                const male2 = [
-                    "James",
-                    "Guy",
-                    "Ryan",
-                    "Arthur",
-                    "Tom"
-                ];
-
-
-                let preferred = female1;
-
-
-                if (
-                    selected === "Female Voice 2"
-                ) {{
-                    preferred = female2;
-                }}
-
-                if (
-                    selected === "Male Voice 1"
-                ) {{
-                    preferred = male1;
-                }}
-
-                if (
-                    selected === "Male Voice 2"
-                ) {{
-                    preferred = male2;
-                }}
-
-
-                for (
-                    const name of preferred
-                ) {{
-
-                    const found =
-                        voices.find(
-                            voice =>
-                                voice.name
-                                .toLowerCase()
-                                .includes(
-                                    name.toLowerCase()
-                                )
-                        );
-
-                    if (found) {{
-                        return found;
-                    }}
-                }}
-
-
-                return voices.find(
-                    voice =>
-                        voice.lang
-                        .toLowerCase()
-                        .startsWith("en")
-                ) || voices[0];
-
-            }}
-
-
-            function speakAnswer() {{
-
-                window.speechSynthesis.cancel();
-
-                const voices =
-                    getVoiceList();
-
-                const voice =
-                    findVoice(
-                        voices,
-                        selectedVoice
-                    );
-
-
-                const utterance =
-                    new SpeechSynthesisUtterance(
-                        speechText
-                    );
-
-
-                if (voice) {{
-
-                    utterance.voice =
-                        voice;
-
-                    utterance.lang =
-                        voice.lang;
-
-                }} else {{
-
-                    utterance.lang =
-                        "en-US";
-
-                }}
-
-
-                utterance.rate =
-                    0.92;
-
-                utterance.pitch =
-                    1;
-
-                utterance.volume =
-                    1;
-
-
-                window.speechSynthesis.speak(
-                    utterance
-                );
-
-            }}
-
-
-            function stopAnswer() {{
-
-                window.speechSynthesis.cancel();
-
-            }}
-
-
-            window.speechSynthesis
-                .onvoiceschanged = function() {{
-                    getVoiceList();
-                }};
-
-            </script>
-
-
-            <div class="voice-bar">
-
-                <span class="wave">
-                    〰️
-                </span>
-
-                <span>
-                    Voice Assistant
-                </span>
-
-                <button
-                    onclick="speakAnswer()"
-                    style="
-                        border:none;
-                        border-radius:7px;
-                        padding:5px 9px;
-                        background:#2563eb;
-                        color:white;
-                        cursor:pointer;
-                        font-size:11px;
-                    "
-                >
-                    Listen
-                </button>
-
-                <button
-                    onclick="stopAnswer()"
-                    style="
-                        border:1px solid #bfdbfe;
-                        border-radius:7px;
-                        padding:5px 8px;
-                        background:white;
-                        color:#1d4ed8;
-                        cursor:pointer;
-                        font-size:11px;
-                    "
-                >
-                    Stop
-                </button>
-
-            </div>
-            """,
-            height=48
-        )
-
-
-    # -----------------------------------------------------
-    # SAVE ASSISTANT RESPONSE
-    # -----------------------------------------------------
+    # =====================================================
+    # SAVE RESPONSE
+    # =====================================================
 
     add_message(
         "assistant",
-        response_text
+        response_text,
+        source
     )
 
 
-    # -----------------------------------------------------
-    # REFRESH
-    # -----------------------------------------------------
+    # =====================================================
+    # RELOAD
+    # =====================================================
 
     st.rerun()
+
+
+# =========================================================
+# VOICE ASSISTANT FOR LATEST ANSWER
+# =========================================================
+
+latest_answer = None
+
+for message in reversed(
+    chat["messages"]
+):
+
+    if message["role"] == "assistant":
+
+        latest_answer = (
+            message["content"]
+        )
+
+        break
+
+
+if latest_answer:
+
+    show_voice_assistant(
+        latest_answer
+    )
 
 
 # =========================================================
@@ -1376,9 +1492,14 @@ Follow these rules:
 st.markdown(
     """
     <div class="footer">
-        NextStep AI · Agentic AI for Smart Cities & Public Services
+
+        🧭 NextStep AI · Agentic AI for Smart Cities & Public Services
+
         <br>
-        Verify important information with the relevant official department.
+
+        Please verify important information with
+        the relevant official department.
+
     </div>
     """,
     unsafe_allow_html=True
