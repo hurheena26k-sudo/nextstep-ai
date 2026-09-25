@@ -6,7 +6,9 @@ from google.genai import types
 from agent import get_service_information, detect_intent
 
 
-# ---------- PAGE CONFIG ----------
+# =========================================================
+# PAGE CONFIG
+# =========================================================
 
 st.set_page_config(
     page_title="NextStep AI",
@@ -15,38 +17,474 @@ st.set_page_config(
 )
 
 
-# ---------- UI ----------
+# =========================================================
+# PROFESSIONAL HOME PAGE UI
+# =========================================================
 
-st.title("🧭 NextStep AI")
-st.subheader("Your AI guide for public services")
+st.markdown(
+    """
+    <style>
 
-st.write(
-    "Tell me what public service you need. "
-    "Type your request or use the microphone."
+    /* Main page */
+
+    .stApp {
+        background: #f8fafc;
+    }
+
+    .main .block-container {
+        max-width: 950px;
+        padding-top: 2rem;
+        padding-bottom: 2rem;
+    }
+
+
+    /* Hero */
+
+    .hero {
+        background: linear-gradient(
+            135deg,
+            #172554 0%,
+            #2563eb 100%
+        );
+
+        border-radius: 24px;
+        padding: 32px 30px;
+        margin-bottom: 25px;
+
+        color: white;
+
+        box-shadow:
+            0 12px 30px
+            rgba(37, 99, 235, 0.15);
+    }
+
+
+    .hero-top {
+        display: flex;
+        align-items: center;
+        gap: 13px;
+        margin-bottom: 17px;
+    }
+
+
+    .hero-icon {
+        width: 48px;
+        height: 48px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        border-radius: 14px;
+
+        background: rgba(255,255,255,0.15);
+
+        font-size: 25px;
+    }
+
+
+    .hero-brand {
+        font-size: 28px;
+        font-weight: 750;
+        line-height: 1.1;
+    }
+
+
+    .hero-tagline {
+        font-size: 13px;
+        opacity: 0.78;
+        margin-top: 3px;
+    }
+
+
+    .hero-question {
+        font-size: 28px;
+        font-weight: 700;
+        line-height: 1.25;
+        margin-bottom: 9px;
+    }
+
+
+    .hero-description {
+        font-size: 15px;
+        line-height: 1.55;
+        opacity: 0.9;
+        max-width: 720px;
+    }
+
+
+    /* Section heading */
+
+    .section-title {
+        color: #172554;
+        font-size: 20px;
+        font-weight: 700;
+        margin-top: 10px;
+        margin-bottom: 13px;
+    }
+
+
+    .section-subtitle {
+        color: #64748b;
+        font-size: 13px;
+        margin-top: -7px;
+        margin-bottom: 17px;
+    }
+
+
+    /* Service cards */
+
+    .service-card {
+        background: white;
+
+        border: 1px solid #e5e7eb;
+        border-radius: 17px;
+
+        padding: 19px;
+
+        min-height: 145px;
+
+        box-shadow:
+            0 4px 15px
+            rgba(15, 23, 42, 0.035);
+
+        transition:
+            transform 0.2s ease,
+            box-shadow 0.2s ease,
+            border-color 0.2s ease;
+    }
+
+
+    .service-card:hover {
+        transform: translateY(-2px);
+
+        border-color: #bfdbfe;
+
+        box-shadow:
+            0 9px 25px
+            rgba(37, 99, 235, 0.08);
+    }
+
+
+    .service-icon {
+        font-size: 25px;
+        margin-bottom: 11px;
+    }
+
+
+    .service-name {
+        color: #172554;
+        font-size: 15px;
+        font-weight: 700;
+        margin-bottom: 5px;
+    }
+
+
+    .service-description {
+        color: #64748b;
+        font-size: 12px;
+        line-height: 1.45;
+    }
+
+
+    /* Example questions */
+
+    .example-box {
+        background: white;
+
+        border: 1px solid #e5e7eb;
+        border-radius: 15px;
+
+        padding: 15px 17px;
+
+        color: #334155;
+
+        font-size: 13px;
+
+        margin-bottom: 9px;
+
+        box-shadow:
+            0 3px 12px
+            rgba(15, 23, 42, 0.025);
+    }
+
+
+    .example-icon {
+        color: #2563eb;
+        margin-right: 6px;
+    }
+
+
+    /* Input hint */
+
+    .input-hint {
+        text-align: center;
+
+        color: #94a3b8;
+
+        font-size: 12px;
+
+        margin-top: 9px;
+    }
+
+
+    /* Sidebar */
+
+    section[data-testid="stSidebar"] {
+        background: white;
+        border-right: 1px solid #e5e7eb;
+    }
+
+
+    /* Footer */
+
+    .footer {
+        text-align: center;
+        color: #94a3b8;
+        font-size: 11px;
+        padding-top: 25px;
+    }
+
+
+    </style>
+    """,
+    unsafe_allow_html=True
 )
+
+
+# =========================================================
+# HOME PAGE HERO
+# =========================================================
+
+st.markdown(
+    """
+    <div class="hero">
+
+        <div class="hero-top">
+
+            <div class="hero-icon">
+                🧭
+            </div>
+
+            <div>
+
+                <div class="hero-brand">
+                    NextStep AI
+                </div>
+
+                <div class="hero-tagline">
+                    Smart guidance for public services
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="hero-question">
+            What do you need help with today?
+        </div>
+
+
+        <div class="hero-description">
+            Tell me what you need in your own words.
+            I can help you understand public-service
+            procedures, required documents, and your
+            next steps.
+        </div>
+
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+
+
+# =========================================================
+# MAIN SERVICE SECTION
+# =========================================================
+
+st.markdown(
+    """
+    <div class="section-title">
+        Explore public services
+    </div>
+
+    <div class="section-subtitle">
+        Choose a service or simply ask your question below.
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+
+
+# =========================================================
+# SERVICE CARDS
+# =========================================================
+
+col1, col2, col3 = st.columns(3)
+
+
+with col1:
+
+    st.markdown(
+        """
+        <div class="service-card">
+
+            <div class="service-icon">
+                📄
+            </div>
+
+            <div class="service-name">
+                Birth Certificate
+            </div>
+
+            <div class="service-description">
+                Understand the documents and
+                application steps you may need.
+            </div>
+
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+
+with col2:
+
+    st.markdown(
+        """
+        <div class="service-card">
+
+            <div class="service-icon">
+                🏠
+            </div>
+
+            <div class="service-name">
+                Property Tax
+            </div>
+
+            <div class="service-description">
+                Get guidance about property-tax
+                information and payment steps.
+            </div>
+
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+
+with col3:
+
+    st.markdown(
+        """
+        <div class="service-card">
+
+            <div class="service-icon">
+                🏛️
+            </div>
+
+            <div class="service-name">
+                Municipal Complaint
+            </div>
+
+            <div class="service-description">
+                Understand how to describe and
+                submit a municipal complaint.
+            </div>
+
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+
+# =========================================================
+# EXAMPLE QUESTIONS
+# =========================================================
+
+st.markdown(
+    "<br>",
+    unsafe_allow_html=True
+)
+
+st.markdown(
+    """
+    <div class="section-title">
+        Try asking
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+
+
+example_questions = [
+    "How do I get a birth certificate?",
+    "I want to pay my property tax.",
+    "I need to report a municipal problem."
+]
+
+
+for question in example_questions:
+
+    st.markdown(
+        f"""
+        <div class="example-box">
+            <span class="example-icon">✦</span>
+            {question}
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+
+st.markdown(
+    """
+    <div class="input-hint">
+        💬 Type your request or tap 🎙️ to speak
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+
 
 st.divider()
 
 
-# ---------- SIDEBAR ----------
+# =========================================================
+# SIDEBAR
+# =========================================================
 
 with st.sidebar:
 
     st.header("🧭 NextStep AI")
 
-    st.write("Supported services:")
-
-    st.markdown("""
-    📄 **Birth Certificate**
-
-    🏠 **Property Tax**
-
-    🏛️ **Municipal Complaint**
-    """)
+    st.caption(
+        "Your AI guide for public services"
+    )
 
     st.divider()
 
-    if st.button("🗑️ Clear Conversation"):
+    st.markdown(
+        "### 📋 Supported Services"
+    )
+
+    st.markdown(
+        """
+        📄 **Birth Certificate**
+
+        🏠 **Property Tax**
+
+        🏛️ **Municipal Complaint**
+        """
+    )
+
+    st.divider()
+
+    if st.button(
+        "🗑️ Clear Conversation",
+        use_container_width=True
+    ):
 
         st.session_state.messages = []
 
@@ -58,7 +496,9 @@ with st.sidebar:
     )
 
 
-# ---------- API CONNECTION ----------
+# =========================================================
+# API CONNECTION
+# =========================================================
 
 api_key = st.secrets["GEMINI_API_KEY"]
 
@@ -67,23 +507,33 @@ client = genai.Client(
 )
 
 
-# ---------- MEMORY ----------
+# =========================================================
+# MEMORY
+# =========================================================
 
 if "messages" not in st.session_state:
 
     st.session_state.messages = []
 
 
+# =========================================================
+# DISPLAY PREVIOUS MESSAGES
+# =========================================================
+
 for message in st.session_state.messages:
 
-    with st.chat_message(message["role"]):
+    with st.chat_message(
+        message["role"]
+    ):
 
         st.markdown(
             message["content"]
         )
 
 
-# ---------- CHAT INPUT WITH MICROPHONE ----------
+# =========================================================
+# CHAT INPUT WITH MICROPHONE
+# =========================================================
 
 prompt = st.chat_input(
     "💬 Type your request or tap 🎙️ to speak",
@@ -92,20 +542,30 @@ prompt = st.chat_input(
 )
 
 
-# ---------- PROCESS INPUT ----------
+# =========================================================
+# PROCESS INPUT
+# =========================================================
 
 user_request = None
 
 
 if prompt:
 
-    # Normal typed message
+    # -----------------------------------------------------
+    # TEXT INPUT
+    # -----------------------------------------------------
+
     if prompt.text:
 
-        user_request = prompt.text.strip()
+        user_request = (
+            prompt.text.strip()
+        )
 
 
-    # Voice message
+    # -----------------------------------------------------
+    # VOICE INPUT
+    # -----------------------------------------------------
+
     elif prompt.audio:
 
         with st.spinner(
@@ -114,7 +574,9 @@ if prompt:
 
             try:
 
-                audio_bytes = prompt.audio.getvalue()
+                audio_bytes = (
+                    prompt.audio.getvalue()
+                )
 
                 transcription_response = (
                     client.models.generate_content(
@@ -130,10 +592,13 @@ Transcribe the citizen's speech.
 Return ONLY the transcription.
 
 Do not answer the citizen.
+
 Do not add explanations.
+
 Do not rewrite or summarize the request.
 
-Preserve the meaning and wording as accurately as possible.
+Preserve the meaning and wording as accurately
+as possible.
 """
                         ]
                     )
@@ -149,7 +614,7 @@ Preserve the meaning and wording as accurately as possible.
                         f"🎙️ Heard: {user_request}"
                     )
 
-            except Exception as error:
+            except Exception:
 
                 st.error(
                     "I couldn't understand the voice input. "
@@ -159,24 +624,34 @@ Preserve the meaning and wording as accurately as possible.
                 user_request = None
 
 
-# ---------- AI PROCESS ----------
+# =========================================================
+# AI PROCESS
+# =========================================================
 
 if user_request:
 
-    # ---------- USER MESSAGE ----------
+    # -----------------------------------------------------
+    # USER MESSAGE
+    # -----------------------------------------------------
 
     with st.chat_message("user"):
 
-        st.markdown(user_request)
+        st.markdown(
+            user_request
+        )
 
 
-    st.session_state.messages.append({
-        "role": "user",
-        "content": user_request
-    })
+    st.session_state.messages.append(
+        {
+            "role": "user",
+            "content": user_request
+        }
+    )
 
 
-    # ---------- CONVERSATION ----------
+    # -----------------------------------------------------
+    # CONVERSATION
+    # -----------------------------------------------------
 
     conversation = "\n".join(
         f'{message["role"].upper()}: '
@@ -185,7 +660,9 @@ if user_request:
     )
 
 
-    # ---------- IDENTIFY SERVICE ----------
+    # -----------------------------------------------------
+    # IDENTIFY SERVICE
+    # -----------------------------------------------------
 
     service_information = (
         get_service_information(
@@ -204,7 +681,9 @@ if user_request:
         )
 
 
-    # ---------- CHECK PREVIOUS MESSAGES ----------
+    # -----------------------------------------------------
+    # CHECK PREVIOUS MESSAGES
+    # -----------------------------------------------------
 
     if service_information is None:
 
@@ -236,7 +715,9 @@ if user_request:
                 break
 
 
-    # ---------- ASSISTANT ----------
+    # -----------------------------------------------------
+    # ASSISTANT
+    # -----------------------------------------------------
 
     with st.chat_message("assistant"):
 
@@ -250,7 +731,9 @@ if user_request:
                 "current procedure and requirements."
             )
 
-            st.warning(response_text)
+            st.warning(
+                response_text
+            )
 
 
         else:
@@ -333,10 +816,10 @@ Keep the response simple and practical.
                     )
 
 
-                    response_text = response.text
+                    response_text = (
+                        response.text
+                    )
 
-
-                    # ---------- DISPLAY RESPONSE ----------
 
                     st.markdown(
                         response_text
@@ -356,7 +839,9 @@ Keep the response simple and practical.
                         )
 
 
-                    # ---------- READ ALOUD ----------
+                    # -------------------------------------------------
+                    # READ ALOUD
+                    # -------------------------------------------------
 
                     safe_text = (
                         response_text
@@ -388,6 +873,7 @@ Keep the response simple and practical.
                             window.speechSynthesis.speak(
                                 speech
                             );
+
                         }}
 
 
@@ -398,6 +884,7 @@ Keep the response simple and practical.
                         }}
 
                         </script>
+
 
                         <div style="
                             display:flex;
@@ -415,7 +902,7 @@ Keep the response simple and practical.
                                     cursor:pointer;
                                 "
                             >
-                                🔊 Read Aloud
+                                〰️ Read Aloud
                             </button>
 
                             <button
@@ -449,23 +936,34 @@ Keep the response simple and practical.
                     )
 
 
-    # ---------- SAVE ASSISTANT MESSAGE ----------
+    # -----------------------------------------------------
+    # SAVE RESPONSE
+    # -----------------------------------------------------
 
-    st.session_state.messages.append({
-        "role": "assistant",
-        "content": response_text
-    })
+    st.session_state.messages.append(
+        {
+            "role": "assistant",
+            "content": response_text
+        }
+    )
 
 
-# ---------- FOOTER ----------
+# =========================================================
+# FOOTER
+# =========================================================
 
-st.divider()
+st.markdown(
+    """
+    <div class="footer">
 
-st.caption(
-    "🧭 NextStep AI • Agentic AI for Smart Cities & Public Services"
-)
+        🧭 NextStep AI · Agentic AI for Smart Cities & Public Services
 
-st.caption(
-    "Information should be verified with the relevant "
-    "official department before taking action."
+        <br>
+
+        Information should be verified with the relevant
+        official department before taking action.
+
+    </div>
+    """,
+    unsafe_allow_html=True
 )
