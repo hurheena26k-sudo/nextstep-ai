@@ -5,11 +5,15 @@ from google import genai
 from google.genai import types
 from agent import get_service_information, detect_intent
 
+
+# ---------- PAGE CONFIG ----------
+
 st.set_page_config(
     page_title="NextStep AI",
     page_icon="🧭",
     layout="centered"
 )
+
 
 # ---------- UI ----------
 
@@ -18,14 +22,16 @@ st.subheader("Your AI guide for public services")
 
 st.write(
     "Tell me what public service you need. "
-    "You can type your request or use the microphone."
+    "Type your request or use the microphone."
 )
 
 st.divider()
 
+
 # ---------- SIDEBAR ----------
 
 with st.sidebar:
+
     st.header("🧭 NextStep AI")
 
     st.write("Supported services:")
@@ -41,7 +47,9 @@ with st.sidebar:
     st.divider()
 
     if st.button("🗑️ Clear Conversation"):
+
         st.session_state.messages = []
+
         st.rerun()
 
     st.caption(
@@ -49,104 +57,144 @@ with st.sidebar:
         "with the relevant official department."
     )
 
+
 # ---------- API CONNECTION ----------
 
 api_key = st.secrets["GEMINI_API_KEY"]
 
-client = genai.Client(api_key=api_key)
+client = genai.Client(
+    api_key=api_key
+)
+
 
 # ---------- MEMORY ----------
 
 if "messages" not in st.session_state:
+
     st.session_state.messages = []
+
 
 for message in st.session_state.messages:
 
     with st.chat_message(message["role"]):
-        st.markdown(message["content"])
 
-# ---------- MICROPHONE INPUT ----------
+        st.markdown(
+            message["content"]
+        )
 
-st.markdown("### 🎙️ Speak to NextStep AI")
 
-audio_input = st.audio_input(
-    "Tap the microphone and speak your request"
+# ---------- CHAT INPUT WITH MICROPHONE ----------
+
+prompt = st.chat_input(
+    "💬 Type your request or tap 🎙️ to speak",
+    accept_audio=True,
+    audio_sample_rate=16000
 )
 
-voice_request = None
 
-if audio_input:
+# ---------- PROCESS INPUT ----------
 
-    with st.spinner("🎧 Understanding your voice..."):
+user_request = None
 
-        try:
 
-            audio_bytes = audio_input.getvalue()
+if prompt:
 
-            transcription_response = client.models.generate_content(
-                model="gemini-3.5-flash-lite",
-                contents=[
-                    """
-Transcribe the citizen's spoken request exactly as clearly as possible.
+    # Normal typed message
+    if prompt.text:
 
-Return ONLY the text of what the citizen said.
+        user_request = prompt.text.strip()
+
+
+    # Voice message
+    elif prompt.audio:
+
+        with st.spinner(
+            "🎙️ Understanding your request..."
+        ):
+
+            try:
+
+                audio_bytes = prompt.audio.getvalue()
+
+                transcription_response = (
+                    client.models.generate_content(
+                        model="gemini-3.5-flash-lite",
+                        contents=[
+                            types.Part.from_bytes(
+                                data=audio_bytes,
+                                mime_type="audio/wav"
+                            ),
+                            """
+Transcribe the citizen's speech.
+
+Return ONLY the transcription.
+
+Do not answer the citizen.
 Do not add explanations.
-Do not answer the request.
-""",
-                    types.Part.from_bytes(
-                        data=audio_bytes,
-                        mime_type="audio/wav"
+Do not rewrite or summarize the request.
+
+Preserve the meaning and wording as accurately as possible.
+"""
+                        ]
                     )
-                ]
-            )
-
-            voice_request = transcription_response.text.strip()
-
-            if voice_request:
-                st.info(
-                    f"🎙️ You said: **{voice_request}**"
                 )
 
-        except Exception:
-            st.error(
-                "I couldn't understand the audio. "
-                "Please try speaking again or type your request."
-            )
+                user_request = (
+                    transcription_response.text.strip()
+                )
 
-# ---------- TEXT INPUT ----------
+                if user_request:
 
-user_request = st.chat_input(
-    "💬 Or type your public-service request..."
-)
+                    st.caption(
+                        f"🎙️ Heard: {user_request}"
+                    )
 
-# Use voice request if available
-if voice_request:
-    user_request = voice_request
+            except Exception as error:
+
+                st.error(
+                    "I couldn't understand the voice input. "
+                    "Please try again or type your request."
+                )
+
+                user_request = None
+
 
 # ---------- AI PROCESS ----------
 
 if user_request:
 
+    # ---------- USER MESSAGE ----------
+
     with st.chat_message("user"):
+
         st.markdown(user_request)
+
 
     st.session_state.messages.append({
         "role": "user",
         "content": user_request
     })
 
-    # Conversation history
+
+    # ---------- CONVERSATION ----------
+
     conversation = "\n".join(
-        f'{message["role"].upper()}: {message["content"]}'
+        f'{message["role"].upper()}: '
+        f'{message["content"]}'
         for message in st.session_state.messages
     )
 
-    # Identify service
-    service_information = get_service_information(
-        user_request
+
+    # ---------- IDENTIFY SERVICE ----------
+
+    service_information = (
+        get_service_information(
+            user_request
+        )
     )
 
     intent = None
+
 
     if service_information is not None:
 
@@ -155,7 +203,9 @@ if user_request:
             service_information
         )
 
-    # Check previous messages for follow-up questions
+
+    # ---------- CHECK PREVIOUS MESSAGES ----------
+
     if service_information is None:
 
         previous_user_messages = [
@@ -164,13 +214,17 @@ if user_request:
             if message["role"] == "user"
         ]
 
+
         for previous_request in reversed(
             previous_user_messages
         ):
 
-            service_information = get_service_information(
-                previous_request
+            service_information = (
+                get_service_information(
+                    previous_request
+                )
             )
+
 
             if service_information is not None:
 
@@ -181,6 +235,7 @@ if user_request:
 
                 break
 
+
     # ---------- ASSISTANT ----------
 
     with st.chat_message("assistant"):
@@ -188,14 +243,15 @@ if user_request:
         if service_information is None:
 
             response_text = (
-                "I don't currently have information about this "
-                "service in my service database.\n\n"
-                "Please check the relevant official government "
-                "department or portal for the current procedure "
-                "and requirements."
+                "I don't currently have information about "
+                "this service in my service database.\n\n"
+                "Please check the relevant official "
+                "government department or portal for the "
+                "current procedure and requirements."
             )
 
             st.warning(response_text)
+
 
         else:
 
@@ -204,15 +260,17 @@ if user_request:
                 indent=2
             )
 
+
             with st.spinner(
                 "🧠 Preparing your NextStep..."
             ):
 
                 try:
 
-                    response = client.models.generate_content(
-                        model="gemini-3.5-flash-lite",
-                        contents=f"""
+                    response = (
+                        client.models.generate_content(
+                            model="gemini-3.5-flash-lite",
+                            contents=f"""
 You are NextStep AI, an AI assistant for public services.
 
 You are having a conversation with a citizen.
@@ -271,96 +329,113 @@ Format the response like this:
 
 Keep the response simple and practical.
 """
+                        )
                     )
+
 
                     response_text = response.text
 
-                    st.markdown(response_text)
 
-                    st.caption(
-                        f"🧠 Service: {service_information['name']}"
+                    # ---------- DISPLAY RESPONSE ----------
+
+                    st.markdown(
+                        response_text
                     )
 
+
+                    st.caption(
+                        f"🧠 Service: "
+                        f"{service_information['name']}"
+                    )
+
+
                     if intent:
+
                         st.caption(
                             f"🎯 Intent: {intent}"
                         )
 
-                    # ---------- VOICE OUTPUT ----------
+
+                    # ---------- READ ALOUD ----------
 
                     safe_text = (
                         response_text
-                        .replace("&", "&amp;")
-                        .replace("<", "&lt;")
-                        .replace(">", "&gt;")
-                        .replace('"', "&quot;")
-                        .replace("'", "&#039;")
+                        .replace("\\", "\\\\")
+                        .replace("`", "\\`")
                         .replace("\n", " ")
                     )
 
+
                     components.html(
                         f"""
+                        <script>
+
+                        function speakNextStep() {{
+
+                            window.speechSynthesis.cancel();
+
+                            const text =
+                                `{safe_text}`;
+
+                            const speech =
+                                new SpeechSynthesisUtterance(
+                                    text
+                                );
+
+                            speech.rate = 0.95;
+                            speech.pitch = 1;
+
+                            window.speechSynthesis.speak(
+                                speech
+                            );
+                        }}
+
+
+                        function stopNextStep() {{
+
+                            window.speechSynthesis.cancel();
+
+                        }}
+
+                        </script>
+
                         <div style="
                             display:flex;
-                            align-items:center;
-                            gap:10px;
+                            gap:8px;
                             margin-top:8px;
                         ">
+
                             <button
-                                onclick="speakText()"
+                                onclick="speakNextStep()"
                                 style="
                                     padding:8px 14px;
                                     border-radius:8px;
                                     border:1px solid #ccc;
                                     background:white;
                                     cursor:pointer;
-                                    font-size:14px;
                                 "
                             >
                                 🔊 Read Aloud
                             </button>
 
                             <button
-                                onclick="stopSpeaking()"
+                                onclick="stopNextStep()"
                                 style="
                                     padding:8px 14px;
                                     border-radius:8px;
                                     border:1px solid #ccc;
                                     background:white;
                                     cursor:pointer;
-                                    font-size:14px;
                                 "
                             >
                                 ⏹️ Stop
                             </button>
+
                         </div>
-
-                        <script>
-                            const textToSpeak = "{safe_text}";
-
-                            function speakText() {{
-                                window.speechSynthesis.cancel();
-
-                                const speech =
-                                    new SpeechSynthesisUtterance(
-                                        textToSpeak
-                                    );
-
-                                speech.rate = 0.95;
-                                speech.pitch = 1;
-
-                                window.speechSynthesis.speak(
-                                    speech
-                                );
-                            }}
-
-                            function stopSpeaking() {{
-                                window.speechSynthesis.cancel();
-                            }}
-                        </script>
                         """,
-                        height=60
+                        height=55
                     )
+
 
                 except Exception:
 
@@ -369,12 +444,18 @@ Keep the response simple and practical.
                         "Please try again."
                     )
 
-                    st.error(response_text)
+                    st.error(
+                        response_text
+                    )
+
+
+    # ---------- SAVE ASSISTANT MESSAGE ----------
 
     st.session_state.messages.append({
         "role": "assistant",
         "content": response_text
     })
+
 
 # ---------- FOOTER ----------
 
