@@ -1,6 +1,8 @@
 import streamlit as st
+import streamlit.components.v1 as components
 import json
 from google import genai
+from google.genai import types
 from agent import get_service_information, detect_intent
 
 st.set_page_config(
@@ -16,8 +18,7 @@ st.subheader("Your AI guide for public services")
 
 st.write(
     "Tell me what public service you need. "
-    "I'll help you understand the department, documents, "
-    "steps, and important information."
+    "You can type your request or use the microphone."
 )
 
 st.divider()
@@ -64,11 +65,63 @@ for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
 
-# ---------- CHAT INPUT ----------
+# ---------- MICROPHONE INPUT ----------
+
+st.markdown("### 🎙️ Speak to NextStep AI")
+
+audio_input = st.audio_input(
+    "Tap the microphone and speak your request"
+)
+
+voice_request = None
+
+if audio_input:
+
+    with st.spinner("🎧 Understanding your voice..."):
+
+        try:
+
+            audio_bytes = audio_input.getvalue()
+
+            transcription_response = client.models.generate_content(
+                model="gemini-3.5-flash-lite",
+                contents=[
+                    """
+Transcribe the citizen's spoken request exactly as clearly as possible.
+
+Return ONLY the text of what the citizen said.
+Do not add explanations.
+Do not answer the request.
+""",
+                    types.Part.from_bytes(
+                        data=audio_bytes,
+                        mime_type="audio/wav"
+                    )
+                ]
+            )
+
+            voice_request = transcription_response.text.strip()
+
+            if voice_request:
+                st.info(
+                    f"🎙️ You said: **{voice_request}**"
+                )
+
+        except Exception:
+            st.error(
+                "I couldn't understand the audio. "
+                "Please try speaking again or type your request."
+            )
+
+# ---------- TEXT INPUT ----------
 
 user_request = st.chat_input(
-    "💬 What public service do you need help with?"
+    "💬 Or type your public-service request..."
 )
+
+# Use voice request if available
+if voice_request:
+    user_request = voice_request
 
 # ---------- AI PROCESS ----------
 
@@ -233,7 +286,83 @@ Keep the response simple and practical.
                             f"🎯 Intent: {intent}"
                         )
 
-                except Exception as e:
+                    # ---------- VOICE OUTPUT ----------
+
+                    safe_text = (
+                        response_text
+                        .replace("&", "&amp;")
+                        .replace("<", "&lt;")
+                        .replace(">", "&gt;")
+                        .replace('"', "&quot;")
+                        .replace("'", "&#039;")
+                        .replace("\n", " ")
+                    )
+
+                    components.html(
+                        f"""
+                        <div style="
+                            display:flex;
+                            align-items:center;
+                            gap:10px;
+                            margin-top:8px;
+                        ">
+                            <button
+                                onclick="speakText()"
+                                style="
+                                    padding:8px 14px;
+                                    border-radius:8px;
+                                    border:1px solid #ccc;
+                                    background:white;
+                                    cursor:pointer;
+                                    font-size:14px;
+                                "
+                            >
+                                🔊 Read Aloud
+                            </button>
+
+                            <button
+                                onclick="stopSpeaking()"
+                                style="
+                                    padding:8px 14px;
+                                    border-radius:8px;
+                                    border:1px solid #ccc;
+                                    background:white;
+                                    cursor:pointer;
+                                    font-size:14px;
+                                "
+                            >
+                                ⏹️ Stop
+                            </button>
+                        </div>
+
+                        <script>
+                            const textToSpeak = "{safe_text}";
+
+                            function speakText() {{
+                                window.speechSynthesis.cancel();
+
+                                const speech =
+                                    new SpeechSynthesisUtterance(
+                                        textToSpeak
+                                    );
+
+                                speech.rate = 0.95;
+                                speech.pitch = 1;
+
+                                window.speechSynthesis.speak(
+                                    speech
+                                );
+                            }}
+
+                            function stopSpeaking() {{
+                                window.speechSynthesis.cancel();
+                            }}
+                        </script>
+                        """,
+                        height=60
+                    )
+
+                except Exception:
 
                     response_text = (
                         "The AI could not generate a response. "
@@ -241,11 +370,6 @@ Keep the response simple and practical.
                     )
 
                     st.error(response_text)
-
-                    # Temporary debugging information
-                    st.caption(
-                        f"Error: {type(e).__name__}: {e}"
-                    )
 
     st.session_state.messages.append({
         "role": "assistant",
